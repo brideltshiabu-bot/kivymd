@@ -1,23 +1,32 @@
+name: Build APK
 
-yaml_content = """
-name: colab_env
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - python=3.10
-  - pip
-  - numpy
-  - pandas
-  - matplotlib
-  - scikit-learn
-  - pip:
-    - torch
-    - torchvision
-    - transformers
-"""
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-with open("environment.yml", "w") as f:
-    f.write(yaml_content)
+jobs:
+  build:
+    runs-on: ubuntu-22.04
 
-print("Fichier environment.yml créé avec succès !")
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip install --upgrade pip
+          pip install buildozer cython==0.29.33
+
+      - name: Build with Buildozer
+        run: buildozer android debug
+        env:
+          ACCEPT_SDK_LICENSE: "y"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-app-apk
+          path: bin/*.apk
