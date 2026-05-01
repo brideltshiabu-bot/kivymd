@@ -1,25 +1,26 @@
 [app]
-title = Mon Application Fantome
-package.name = monappli
+title = Mon App Fantome
+package.name = ghost
 package.domain = org.test
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 0.1
 
-# Requirements simplifiés pour éviter les erreurs de compilation
-requirements = python3,kivy==2.2.1,kivymd,pillow
+# --- CORRECTION DES VERSIONS ---
+# KivyMD 1.2.0 fonctionne mieux avec Kivy 2.3.0
+requirements = python3, kivy==2.3.0, https://github.com, pillow
 
 orientation = portrait
 fullscreen = 1
 android.permissions = INTERNET
-android.api = 33
-android.minapi = 21
-android.archs = arm64-v8a
-android.accept_sdk_license = True
 
-# --- ICONE (Laisse ces lignes par défaut si tu n'as pas encore téléversé d'images) ---
-# icon.filename = %(source.dir)s/icon.png
-# presplash.filename = %(source.dir)s/presplash.png
+# --- COMPATIBILITÉ PROCESSEUR ---
+# On garde les deux pour être sûr que ça s'installe sur ton modèle
+android.api = 31
+android.minapi = 21
+android.archs = armeabi-v7a, arm64-v8a
+
+android.accept_sdk_license = True
 
 [buildozer]
 log_level = 2
