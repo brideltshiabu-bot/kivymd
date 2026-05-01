@@ -2,44 +2,50 @@
 # (str) Titre de votre application
 title = Mon Application Fantome
 
-# (str) Nom du package
+# (str) Nom du package (sans espaces ni caractères spéciaux)
 package.name = monappli
 
-# (str) Domaine du package (style reverse DNS)
+# (str) Domaine du package
 package.domain = org.test
 
-# (str) Répertoire source où se trouve votre main.py
+# (str) Répertoire source
 source.dir = .
 
-# (list) Extensions de fichiers à inclure
-source.include_exts = py,png,jpg,kv,atlas
-
-# (list) Application requirements
-# IMPORTANT : On ajoute kivymd et pillow ici pour ton projet
-requirements = python3,kivy==2.2.1,kivymd,pillow,hostpython3
+# (list) Extensions à inclure
+source.include_exts = py,png,jpg,kv,atlas,json
 
 # (str) Version de l'application
 version = 0.1
 
-# (str) Orientation (landscape, portrait or all)
+# (list) Dépendances - J'ai ajouté Pillow pour la gestion des images/icones
+requirements = python3,kivy==2.2.1,kivymd,pillow,hostpython3
+
+# --- SECTION LOGO & DESIGN ---
+# (str) Nom du fichier de l'icône (doit être à la racine de ton GitHub)
+icon.filename = icon.png
+
+# (str) Image de chargement (Presplash)
+presplash.filename = presplash.png
+
+# (str) Couleur de fond du chargement (en hexadécimal)
+android.presplash_color = #FFFFFF
+# ------------------------------
+
+# (str) Orientation
 orientation = portrait
 
-# (bool) Indiquer si l'application est en plein écran
+# (bool) Plein écran
 fullscreen = 1
 
-# (list) Permissions Android
-android.permissions = INTERNET
+# (list) Permissions
+android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 
-# (int) API Android cible
+# (int) API Android (33 est parfait pour le Play Store actuel)
 android.api = 33
-
-# (int) API Android minimum
 android.minapi = 21
-
-# (str) Architecture Android
 android.archs = arm64-v8a
 
-# (bool) Accepter automatiquement les licences SDK
+# (bool) Acceptation des licences
 android.accept_sdk_license = True
 
 [buildozer]
