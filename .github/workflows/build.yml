@@ -1,1 +1,23 @@
 
+yaml_content = """
+name: colab_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - pip:
+    - torch
+    - torchvision
+    - transformers
+"""
+
+with open("environment.yml", "w") as f:
+    f.write(yaml_content)
+
+print("Fichier environment.yml créé avec succès !")
