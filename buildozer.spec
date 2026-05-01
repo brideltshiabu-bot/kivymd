@@ -1,6 +1,6 @@
 [app]
 # (str) Titre de votre application
-title = MonApplication
+title = Mon Application Fantome
 
 # (str) Nom du package
 package.name = monappli
@@ -14,13 +14,14 @@ source.dir = .
 # (list) Extensions de fichiers à inclure
 source.include_exts = py,png,jpg,kv,atlas
 
+# (list) Application requirements
+# IMPORTANT : On ajoute kivymd et pillow ici pour ton projet
+requirements = python3,kivy==2.2.1,kivymd,pillow,hostpython3
+
 # (str) Version de l'application
 version = 0.1
 
-# (list) Dépendances (Ajoutez vos bibliothèques ici)
-requirements = python3,kivy,hostpython3
-
-# (str) Orientation (landscape, sensorLandscape, portrait or all)
+# (str) Orientation (landscape, portrait or all)
 orientation = portrait
 
 # (bool) Indiquer si l'application est en plein écran
@@ -29,21 +30,18 @@ fullscreen = 1
 # (list) Permissions Android
 android.permissions = INTERNET
 
-# (int) API Android cible (33 est le standard actuel pour le Play Store)
+# (int) API Android cible
 android.api = 33
 
 # (int) API Android minimum
 android.minapi = 21
 
-# (str) Architecture Android à build (armeabi-v7a ou arm64-v8a)
+# (str) Architecture Android
 android.archs = arm64-v8a
 
 # (bool) Accepter automatiquement les licences SDK
 android.accept_sdk_license = True
 
 [buildozer]
-# (int) Niveau de log (1 = erreur seulement, 2 = info, 10 = debug)
 log_level = 2
-
-# (str) Répertoire pour stocker les artefacts du build
 bin_dir = ./bin
