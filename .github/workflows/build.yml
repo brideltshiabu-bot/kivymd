@@ -11,25 +11,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ÉTAPE CRUCIALE : Installer Java 17
+      # ÉTAPE 1 : Forcer l'utilisation de Python 3.11 (stable pour Kivy/Buildozer)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # ÉTAPE 2 : Installer Java 17
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # ÉTAPE 3 : Installer les dépendances système et Python
       - name: Install dependencies
         run: |
           sudo apt update
           sudo apt install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-          pip install --upgrade pip
-          pip install buildozer cython==0.29.33
+          python -m pip install --upgrade pip setuptools wheel
+          # Cython 3.0.x est requis pour les versions récentes de Kivy/Buildozer
+          pip install buildozer "cython>=3.0.0"
 
+      # ÉTAPE 4 : Accepter automatiquement les licences SDK Android et compiler
       - name: Build with Buildozer
-        run: buildozer android debug
+        run: |
+          mkdir -p -v $HOME/.android
+          touch $HOME/.android/repositories.cfg
+          buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "y"
 
+      # ÉTAPE 5 : Récupérer le fichier APK généré
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
