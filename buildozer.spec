@@ -7,7 +7,7 @@ source.include_exts = py,png,jpg,kv,json,wav
 version = 1.0
 
 # Requirements complets
-requirements = python3,kivy==2.3.0,kivymd==1.1.1,requests,urllib3,certifi,idna,charset-normalizer,plyer,openssl,pyjnius,kivy_garden.mapview,WAKE_LOCK,VIBRATE
+requirements = python3,kivy==2.3.0,kivymd==1.1.1,requests,urllib3,certifi,idna,charset-normalizer,plyer,openssl,pyjnius,kivy_garden.mapview,WAKE_LOCK
 
 icon.filename = icon.png
 orientation = portrait
