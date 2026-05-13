@@ -12,21 +12,38 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # ÉTAPE 1 : Fixer Python sur la version stable 3.11 (Évite le bug Python 3.14)
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # ÉTAPE 2 : Installer JDK 17 propre (Utilise les dépôts officiels GitHub de Temurin)
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # Cette action officielle pré-installe tout et évite le crash du dossier python-for-android manquant
-      - name: Build with Buildozer Action
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          buildozer_version: stable
-          buildozer_config: buildozer.spec
-          command: android debug
-          repository_cache: true
+      # ÉTAPE 3 : Installer les dépendances d'Ubuntu et de Python
+      - name: Install System and Python Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          python -m pip install --upgrade pip setuptools wheel
+          pip install --upgrade python-for-android
+          pip install buildozer "cython>=3.0.0"
 
+      # ÉTAPE 4 : Compiler directement sans la commande "clean" défectueuse
+      - name: Build with Buildozer
+        run: |
+          mkdir -p -v $HOME/.android
+          touch $HOME/.android/repositories.cfg
+          buildozer -v android debug
+        env:
+          ACCEPT_SDK_LICENSE: "y"
+
+      # ÉTAPE 5 : Sauvegarder l'APK pour le téléchargement final
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
