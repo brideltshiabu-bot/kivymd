@@ -30,9 +30,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-          python -m pip install --upgrade pip setuptools wheel
-          pip install --upgrade python-for-android
-          pip install buildozer "cython>=3.0.0"
+          python -m pip install --upgrade "pip<24.1" "setuptools<70.0" "wheel<0.44"
+          pip install --upgrade "python-for-android>=2024.1.21"
+          pip install buildozer "cython>=3.0.0,<3.1.0"
 
            # ÉTAPE 4 : Configurer l'environnement Android et compiler l'APK
       - name: Build with Buildozer
