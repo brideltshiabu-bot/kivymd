@@ -1,47 +1,75 @@
 [app]
+
+# (str) Title of your application
 title = Alerte_App
+
+# (str) Package name
 package.name = alerteapp
+
+# (str) Package domain (needed for android packaging)
 package.domain = org.odihe
+
+# (str) Source code directory
 source.dir = .
+
+# (list) Source files to include (extensions)
 source.include_exts = py,png,jpg,kv,json,wav
+
+# (str) Application version
 version = 1.0
 
-# Requirements complets
-requirements = python3,kivy==2.3.0,kivymd==1.1.1,requests,urllib3,certifi,idna,charset-normalizer,plyer,openssl,pyjnius,kivy_garden.mapview,WAKE_LOCK
+# (list) Application requirements
+# Suppression des paquets système corrompus (WAKE_LOCK), ajout du paquet jnius requis
+requirements = python3,kivy==2.3.0,kivymd==1.1.1,requests,urllib3,certifi,idna,charset-normalizer,plyer,openssl,jnius,pyjnius,kivy_garden.mapview
 
+# (str) Icon of the application
 icon.filename = icon.png
+
+# (str) Supported orientations
 orientation = portrait
+
+# (str) Presplash screen image
 presplash.filename = splash.png
 
+# (bool) Accept SDK license without operator input
 android.accept_sdk_license = True
- 
-# PERMISSIONS MISES À JOUR
-# Ajout de SCHEDULE_EXACT_ALARM pour la précision temporelle sur Android 14
+
+# (list) Permissions requises pour le fonctionnement du SOS et de l'arrière-plan sur Android 14
 android.permissions = INTERNET,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION,ACCESS_BACKGROUND_LOCATION,VIBRATE,WAKE_LOCK,RECEIVE_BOOT_COMPLETED,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,HIGH_SAMPLING_RATE_SENSORS,FOREGROUND_SERVICE,FOREGROUND_SERVICE_LOCATION,POST_NOTIFICATIONS,SCHEDULE_EXACT_ALARM
 
-# CONFIGURATION CRITIQUE POUR ANDROID 14
-# Déclare le service comme étant lié à la localisation
-android.manifest.attributes = android:foregroundServiceType="location"
-# Empêche la création de multiples instances de l'app
+# (str) Déclaration propre du type de service au premier plan requis par Android 14
+android.manifest.service_attributes = android:foregroundServiceType="location"
+
+# (str) Empêche la création de plusieurs instances parallèles de l'application
 android.manifest.launch_mode = singleTask
 
-# Cible Android 14 (API 34)
+# (int) Android API target (Android 14)
 android.api = 34
+
+# (int) Minimum API required (Android 5.0)
 android.minapi = 21
+
+# (str) Android NDK version to use
 android.ndk = 25b
+
+# (int) Android NDK API to use
 android.ndk_api = 21
 
-# Architecture 64 bits
+# (list) Architectures cibles pour les téléphones modernes (64-bit exigé par Google Play)
 android.archs = arm64-v8a, armeabi-v7a
 
-# --- LE CHANGEMENT MAJEUR ICI ---
-# foreground : le service aura une notification permanente
-# sticky : Android relancera le service automatiquement s'il est tué
+# (list) Déclaration du service d'arrière-plan autonome
+# foreground : notification persistante obligatoire sur Android 14
+# sticky : tentative de relance automatique par le système en cas de fermeture
 services = AlerteService:service.py:foreground:sticky
 
-# Indique explicitement que c'est un service de premier plan
+# (bool) Indique explicitement la présence d'un service de premier plan
 android.foreground_service = True
 
 [buildozer]
+
+# (int) Log level (0 = error only, 1 = info, 2 = debug et verbeux)
 log_level = 2
+
+# (int) Display warning if buildozer is run as root
 warn_on_root = 1
