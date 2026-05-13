@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p -v $HOME/.android
           touch $HOME/.android/repositories.cfg
-          # Suppression de la ligne "buildozer android clean" qui provoquait le crash
+          # La ligne "buildozer android clean" a été supprimée d'ici pour éviter le crash
           buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "y"
