@@ -18,6 +18,9 @@ source.include_exts = py,png,jpg,kv,json,wav
 # (str) Application version
 version = 1.0
 
+# Force python-for-android à compiler l'application avec la branche Python 3.11
+p4a.branch = release-v2024.01.21
+
 # (list) Application requirements
 # Suppression des paquets système corrompus (WAKE_LOCK), ajout du paquet jnius requis
 requirements = python3,kivy==2.3.0,kivymd==1.1.1,requests,urllib3,certifi,idna,charset-normalizer,plyer,openssl,jnius,pyjnius,kivy_garden.mapview
