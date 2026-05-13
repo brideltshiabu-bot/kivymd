@@ -34,15 +34,16 @@ jobs:
           pip install --upgrade python-for-android
           pip install buildozer "cython>=3.0.0"
 
-      # ÉTAPE 4 : Configurer l'environnement Android et compiler l'APK
+           # ÉTAPE 4 : Configurer l'environnement Android et compiler l'APK
       - name: Build with Buildozer
         run: |
           mkdir -p -v $HOME/.android
           touch $HOME/.android/repositories.cfg
-          buildozer android clean
+          # Suppression de la ligne "buildozer android clean" qui provoquait le crash
           buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "y"
+
 
       # ÉTAPE 5 : Sauvegarder l'APK généré pour le télécharger
       - name: Upload APK Artifact
