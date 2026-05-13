@@ -73,3 +73,4 @@ log_level = 2
 
 # (int) Display warning if buildozer is run as root
 warn_on_root = 1
+
